@@ -30,6 +30,12 @@ public class Producto {
         this.precio = precio;
     }
 
+    public Producto(String nombre, int idCategoria, double precio) {
+        this.nombre = nombre;
+        this.idCategoria = idCategoria;
+        this.precio = precio;
+    }
+
     public int getId() {
         return id;
     }

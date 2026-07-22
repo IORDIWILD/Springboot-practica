@@ -38,7 +38,7 @@ public class ProductoController {
 
     //Post /productos/{id} -> actualizar uno existente
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Producto> actualizar (@PathVariable int id, @RequestBody Producto datosNuevos){
         return productoRepository.findById(id).map(productoExistente ->{
             productoExistente.setNombre(datosNuevos.getNombre());

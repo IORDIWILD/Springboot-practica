@@ -1,0 +1,15 @@
+info:
+  name: Borrar Producto
+  type: http
+  seq: 7
+
+http:
+  method: DELETE
+  url: http://192.168.100.40:8080/productos/34
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

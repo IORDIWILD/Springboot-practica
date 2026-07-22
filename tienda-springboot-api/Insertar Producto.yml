@@ -1,0 +1,27 @@
+info:
+  name: Insertar Producto
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://192.168.100.40:8080/productos
+  headers:
+    - name: Content-Type
+      value: application/json
+      disabled: true
+  body:
+    type: json
+    data: |2-
+       {
+             "nombre": "Cámara web",
+             "idCategoria": 4,
+             "precio": 550.00
+         }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

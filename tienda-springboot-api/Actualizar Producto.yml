@@ -1,0 +1,23 @@
+info:
+  name: Actualizar Producto
+  type: http
+  seq: 6
+
+http:
+  method: PUT
+  url: http://192.168.100.40:8080/productos/34
+  body:
+    type: json
+    data: |-
+      {
+             "nombre": "Cámara web HD 1080p",
+             "idCategoria": 4,
+             "precio": 620.00
+         }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
