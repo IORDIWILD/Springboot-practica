@@ -2,6 +2,9 @@ package org.example.tiendaspringboot.model;
 
 import jakarta.persistence.*;
 
+import java.io.CharArrayReader;
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "producto")
 public class Producto {
@@ -9,39 +12,40 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
-    private int id;
+    private Integer idProducto;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "id_categoria")
-    private int idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
 
-    @Column(name = "precio", nullable = false)
-    private double precio;
+    @Column(name = "precio", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio;
 
     public Producto() {
     }
 
-    public Producto(int id, String nombre, int idCategoria, double precio) {
-        this.id = id;
+    public Producto(int id, String nombre, Categoria categoria, BigDecimal precio) {
+        this.idProducto = id;
         this.nombre = nombre;
-        this.idCategoria = idCategoria;
+        this.categoria=categoria;
         this.precio = precio;
     }
 
-    public Producto(String nombre, int idCategoria, double precio) {
+    public Producto(String nombre, Categoria categoria, BigDecimal precio) {
         this.nombre = nombre;
-        this.idCategoria = idCategoria;
+        this.categoria=categoria;
         this.precio = precio;
     }
 
-    public int getId() {
-        return id;
+    public Integer getIdProducto() {
+        return idProducto;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdProducto(Integer idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getNombre() {
@@ -52,24 +56,21 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public int getIdCategoria() {
-        return idCategoria;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
-    public double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
-    @Override
-    public String toString() {
-        return "Producto{id=" + id + ", nombre='" + nombre + "', idCategoria=" + idCategoria + ", precio=" + precio + "}";
-    }
+
 }
