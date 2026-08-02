@@ -1,16 +1,17 @@
 info:
-  name: Actualizar Cliente
+  name: Actualizar Categoria
   type: http
   seq: 3
 
 http:
   method: PUT
-  url: http://192.168.196.99:8080/clientes/19
+  url: http://192.168.196.99:8080/categorias/8
   body:
     type: json
     data: |-
       {
-        "ciudad": "Tepito"
+        "categoriaPadreId" : 6,
+        "nombre" : "Sillas"
       }
   auth: inherit
 

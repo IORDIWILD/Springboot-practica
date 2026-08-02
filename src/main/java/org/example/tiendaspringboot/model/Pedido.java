@@ -15,11 +15,11 @@ public class Pedido {
     @Column(name = "id_pedido")
     private Integer idPedido;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_empleado")
     private Empleado empleado;
 

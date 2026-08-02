@@ -2,54 +2,50 @@ package org.example.tiendaspringboot.controller;
 
 
 
+import jakarta.validation.Valid;
+import org.example.tiendaspringboot.dto.request.ClienteCreateRequestDTO;
+import org.example.tiendaspringboot.dto.request.ClienteUpdateRequestDTO;
+import org.example.tiendaspringboot.dto.response.ClienteResponseDTO;
+import org.example.tiendaspringboot.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.example.tiendaspringboot.model.Cliente;
-import org.example.tiendaspringboot.repository.ClienteRepository;
+
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @GetMapping
-    public List<Cliente> listar(){ return clienteRepository.findAll();}
+    public ResponseEntity<List<ClienteResponseDTO>> listar(){
+        return ResponseEntity.ok(clienteService.listar());
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarPorId(@PathVariable int id){
-        return clienteRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ClienteResponseDTO> buscarPorId(@PathVariable int id){
+        return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 
     @PostMapping
-    public Cliente insertar(@RequestBody Cliente cliente){
-        return clienteRepository.save(cliente);
+    public ResponseEntity<ClienteResponseDTO> insertar(@RequestBody @Valid ClienteCreateRequestDTO cliente){
+       ClienteResponseDTO creado = clienteService.crear(cliente);
+       return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> actualizar(@PathVariable Integer id, @RequestBody Cliente datosNuevos){
-        return clienteRepository.findById(id).map( clienteExistente -> {
-            clienteExistente.setNombre(datosNuevos.getNombre());
-            clienteExistente.setEmail(datosNuevos.getEmail());
-            clienteExistente.setCiudad(datosNuevos.getCiudad());
-            clienteExistente.setFechaRegistro(datosNuevos.getFechaRegistro());
-            clienteExistente.setTelefono(datosNuevos.getTelefono());
-            Cliente actualizado = clienteRepository.save(clienteExistente);
-            return ResponseEntity.ok(actualizado);
-        }).orElseGet(() -> ResponseEntity.notFound().build() );
+    public ResponseEntity<ClienteResponseDTO> actualizar(@PathVariable Integer id, @RequestBody @Valid ClienteUpdateRequestDTO datosNuevos){
+        return ResponseEntity.ok(clienteService.actualizar(id,datosNuevos));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> borrar(@PathVariable Integer id){
-        if(!clienteRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
-        }
-        clienteRepository.deleteById(id);
+    public ResponseEntity<Void> borrar(@PathVariable Integer id) {
+        clienteService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 }

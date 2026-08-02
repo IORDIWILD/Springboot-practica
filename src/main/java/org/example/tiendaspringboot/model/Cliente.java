@@ -3,6 +3,8 @@ package org.example.tiendaspringboot.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.IdGeneratorType;
 
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "cliente")
@@ -23,29 +25,12 @@ public class Cliente {
     private String ciudad;
 
     @Column(name = "fecha_registro",nullable = false)
-    private String fechaRegistro;
+    private LocalDate fechaRegistro;
 
     @Column(name = "telefono",length = 20)
     private String telefono;
 
     public Cliente() {
-    }
-
-    public Cliente(Integer id, String nombre, String email, String ciudad, String fechaRegistro, String telefono) {
-        this.idCliente = id;
-        this.nombre = nombre;
-        this.email = email;
-        this.ciudad = ciudad;
-        this.fechaRegistro = fechaRegistro;
-        this.telefono = telefono;
-    }
-
-    public Cliente(String nombre, String email, String ciudad, String fechaRegistro, String telefono) {
-        this.nombre = nombre;
-        this.email = email;
-        this.ciudad = ciudad;
-        this.fechaRegistro = fechaRegistro;
-        this.telefono = telefono;
     }
 
     public int getIdCliente() {
@@ -80,11 +65,11 @@ public class Cliente {
         this.ciudad = ciudad;
     }
 
-    public String getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(String fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

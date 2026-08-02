@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:8080/pedidos
+  url: http://192.168.196.99:8080/pedidos
   body:
     type: json
     data: |-

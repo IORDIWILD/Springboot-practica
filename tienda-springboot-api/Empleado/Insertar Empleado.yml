@@ -5,7 +5,17 @@ info:
 
 http:
   method: POST
-  url: http://localhost:8080/empleados
+  url: http://192.168.196.99:8080/empleados/11
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "Juan",
+        "puesto": "Vendedor",
+        "salario": 15000.00,
+        "jefeId": null,
+        "fechaContratacion": "2026-07-24"
+      }
   auth: inherit
 
 settings:

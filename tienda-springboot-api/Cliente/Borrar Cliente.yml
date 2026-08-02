@@ -5,7 +5,12 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:8080/clientes/18
+  url: http://192.168.196.99:8080/clientes/19
+  params:
+    - name: id
+      value: ""
+      type: query
+      disabled: true
   auth: inherit
 
 settings:

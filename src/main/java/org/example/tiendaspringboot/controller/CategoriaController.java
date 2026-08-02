@@ -2,11 +2,15 @@ package org.example.tiendaspringboot.controller;
 
 
 
+import jakarta.validation.Valid;
+import org.example.tiendaspringboot.dto.request.CategoriaCreateRequestDTO;
+import org.example.tiendaspringboot.dto.request.CategoriaUpdateRequestDTO;
+import org.example.tiendaspringboot.dto.response.CategoriaResponseDTO;
+import org.example.tiendaspringboot.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.example.tiendaspringboot.model.Categoria;
-import org.example.tiendaspringboot.repository.CategoriaRepository;
 
 import java.util.List;
 
@@ -15,38 +19,34 @@ import java.util.List;
 public class CategoriaController {
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoriaService categoriaService;
 
     @GetMapping
-    public List<Categoria> listar() { return categoriaRepository.findAll();}
+    public ResponseEntity<List<CategoriaResponseDTO>> listar(){
+        return ResponseEntity.ok(categoriaService.listar());
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> buscarPorId(@PathVariable Integer id){
-        return categoriaRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CategoriaResponseDTO> buscarPorId(@PathVariable Integer id){
+        return ResponseEntity.ok(categoriaService.buscarPorId(id));
     }
 
     @PostMapping
-    public Categoria insertar(@RequestBody Categoria categoria){
-        return categoriaRepository.save(categoria);
+    public ResponseEntity<CategoriaResponseDTO> insertar(@RequestBody @Valid CategoriaCreateRequestDTO categoria){
+        CategoriaResponseDTO creado = categoriaService.crear(categoria);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> actualizar(@PathVariable Integer id, @RequestBody Categoria datosNuevos){
-        return  categoriaRepository.findById(id).map(categoriaExistente ->{
-            categoriaExistente.setNombre(datosNuevos.getNombre());
-            categoriaExistente.setCategoriaPadre(datosNuevos.getCategoriaPadre());
-            Categoria actualizado = categoriaRepository.save(categoriaExistente);
-            return ResponseEntity.ok(actualizado);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CategoriaResponseDTO> actualizar(@PathVariable Integer id, @RequestBody @Valid CategoriaUpdateRequestDTO datosNuevos){
+        return ResponseEntity.ok(categoriaService.actualizar(id,datosNuevos));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> borrar(@PathVariable Integer id){
-        if(!categoriaRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
-        }
-        categoriaRepository.deleteById(id);
+    public ResponseEntity<Void> borrar(@PathVariable Integer id) {
+        categoriaService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
 
 }
