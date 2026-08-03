@@ -2,12 +2,12 @@ package org.example.tiendaspringboot.dto.response;
 
 import java.math.BigDecimal;
 
-public class ProductoResumen {
+public class ProductoResumenDTO {
     private Integer idProducto;
     private String nombre;
     private BigDecimal precio;
 
-    public ProductoResumen() {
+    public ProductoResumenDTO() {
     }
 
     public Integer getIdProducto() {

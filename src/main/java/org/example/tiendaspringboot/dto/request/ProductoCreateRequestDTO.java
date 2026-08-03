@@ -18,7 +18,7 @@ public class ProductoCreateRequestDTO {
 
     @NotNull
     @Positive(message = "El precio debe ser mayor a 0")
-    private BigDecimal price;
+    private BigDecimal precio;
 
     public ProductoCreateRequestDTO() {
     }
@@ -39,11 +39,11 @@ public class ProductoCreateRequestDTO {
         this.idCategoria = idCategoria;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 }

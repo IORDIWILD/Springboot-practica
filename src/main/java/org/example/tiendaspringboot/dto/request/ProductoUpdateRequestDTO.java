@@ -1,7 +1,5 @@
 package org.example.tiendaspringboot.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -16,7 +14,7 @@ public class ProductoUpdateRequestDTO {
     private Integer idCategoria;
 
     @Positive(message = "El precio debe ser mayor a 0")
-    private BigDecimal price;
+    private BigDecimal precio;
 
     public ProductoUpdateRequestDTO() {
     }
@@ -37,11 +35,11 @@ public class ProductoUpdateRequestDTO {
         this.idCategoria = idCategoria;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 }

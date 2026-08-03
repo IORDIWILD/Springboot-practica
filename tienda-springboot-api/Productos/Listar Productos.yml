@@ -1,11 +1,11 @@
 info:
   name: Listar Productos
   type: http
-  seq: 4
+  seq: 1
 
 http:
   method: GET
-  url: http://localhost:8080/productos/precio
+  url: http://192.168.196.99:8080/productos
   params:
     - name: min
       value: "100"

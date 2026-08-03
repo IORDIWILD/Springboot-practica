@@ -1,9 +1,15 @@
 package org.example.tiendaspringboot.controller;
 
 
+import jakarta.validation.Valid;
+import org.example.tiendaspringboot.dto.request.ProductoCreateRequestDTO;
+import org.example.tiendaspringboot.dto.request.ProductoUpdateRequestDTO;
+import org.example.tiendaspringboot.dto.response.ProductoResponseDTO;
 import org.example.tiendaspringboot.repository.ProductoRepository;
 import org.example.tiendaspringboot.model.Producto;
+import org.example.tiendaspringboot.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,75 +21,46 @@ import java.util.Optional;
 @RequestMapping("/productos")
 public class ProductoController {
     @Autowired
-    private ProductoRepository productoRepository;
+    private ProductoService productoService;
 
     //Get /productos -> los lista todos
     @GetMapping
-    public List<Producto> listar(){
-        return productoRepository.findAll();
+    public ResponseEntity<List<ProductoResponseDTO>> listar(){
+        return ResponseEntity.ok(productoService.listar());
     }
 
     //Get /productos/{id} -> buscar uno especifico
     @GetMapping({"/{id}"})
-    public ResponseEntity<Producto> buscarPorId(@PathVariable Integer id){
-        Optional<Producto> producto = productoRepository.findById(id);
-        return producto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ProductoResponseDTO> buscarPorId(@PathVariable Integer id){
+        return ResponseEntity.ok(productoService.buscarPorId(id));
     }
 
     //Post /productos -> insertar uno nuevo
     @PostMapping
-    public Producto insertar(@RequestBody Producto producto){
-        return productoRepository.save(producto);
+    public ResponseEntity<ProductoResponseDTO> insertar(@RequestBody @Valid ProductoCreateRequestDTO dto){
+        ProductoResponseDTO creado = productoService.crear(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     //Post /productos/{id} -> actualizar uno existente
 
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> actualizar (@PathVariable Integer id, @RequestBody Producto datosNuevos){
-        return productoRepository.findById(id).map(productoExistente ->{
-            productoExistente.setNombre(datosNuevos.getNombre());
-            productoExistente.setCategoria(datosNuevos.getCategoria());
-            productoExistente.setPrecio(datosNuevos.getPrecio());
-            Producto actualizado = productoRepository.save(productoExistente);
-            return ResponseEntity.ok(actualizado);
-        }).orElseGet( ()-> ResponseEntity.notFound().build());
+    public ResponseEntity<ProductoResponseDTO> actualizar (@PathVariable Integer id, @RequestBody @Valid ProductoUpdateRequestDTO datosNuevos){
+        return ResponseEntity.ok(productoService.actualizar(id,datosNuevos));
     }
 
     //Delete /productos/{id} ->borrar uno
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> borrar(@PathVariable int id){
-        if(!productoRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
-        }
-        productoRepository.deleteById(id);
+        productoService.eliminar(id);
         return ResponseEntity.noContent().build();
-
     }
 
     @GetMapping("/categoria/{idCategoria}")
-    public List<Producto> listarPorCategoria(@PathVariable Integer idCategoria){
-        return productoRepository.findByCategoriaIdCategoria(idCategoria);
+    public ResponseEntity<List<ProductoResponseDTO>> listarPorCategoria(@PathVariable Integer idCategoria){
+        return ResponseEntity.ok(productoService.buscarPorCategoria(idCategoria));
     }
 
-    @GetMapping("/buscar")
-    public List<Producto> buscarPorNombre(@RequestParam String nombre){
-        return productoRepository.findByNombreContainingIgnoreCase(nombre);
-    }
-
-
-    @GetMapping("/precio")
-    public List<Producto> buscarPorRangoPrecio(@RequestParam(required = false)BigDecimal min, @RequestParam(required = false
-    ) BigDecimal max ) {
-        if(min != null && max!=null ){
-            return productoRepository.findByPrecioBetween(min,max);
-        } else if (min != null) {
-            return productoRepository.findByPrecioGreaterThan(min);
-        } else if (max!=null) {
-            return productoRepository.findByPrecioLessThan(max);
-        } else{
-            return productoRepository.findAll();
-        }
-    }
 }
 
 
