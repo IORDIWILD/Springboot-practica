@@ -5,14 +5,14 @@ info:
 
 http:
   method: PUT
-  url: http://192.168.100.40:8080/productos/34
+  url: http://192.168.196.99:8080/productos/35
   body:
     type: json
     data: |-
       {
-             "nombre": "Cámara web HD 1080p",
-             "idCategoria": 4,
-             "precio": 620.00
+             "nombre": "Calzon de abuela",
+             "idCategoria": 3,
+             "precio": 120
          }
   auth: inherit
 

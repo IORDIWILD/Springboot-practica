@@ -6,18 +6,6 @@ info:
 http:
   method: GET
   url: http://192.168.196.99:8080/productos
-  params:
-    - name: min
-      value: "100"
-      type: query
-      disabled: true
-    - name: max
-      value: "1000"
-      type: query
-      disabled: true
-  body:
-    type: text
-    data: Mesa de centro
   auth: inherit
 
 settings:

@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://192.168.100.40:8080/productos
+  url: http://192.168.196.99:8080/productos
   headers:
     - name: Content-Type
       value: application/json
@@ -14,9 +14,9 @@ http:
     type: json
     data: |2-
        {
-             "nombre": "Cámara web",
-             "idCategoria": 4,
-             "precio": 550.00
+             "nombre": "Tanga",
+             "idCategoria": 3,
+             "precio": 10000
          }
   auth: inherit
 

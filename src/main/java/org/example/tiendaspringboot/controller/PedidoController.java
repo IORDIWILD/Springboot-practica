@@ -1,8 +1,14 @@
 package org.example.tiendaspringboot.controller;
 
+import jakarta.validation.Valid;
+import org.example.tiendaspringboot.dto.request.PedidoCreateRequestDTO;
+import org.example.tiendaspringboot.dto.request.PedidoUpdateRequestDTO;
+import org.example.tiendaspringboot.dto.response.PedidoResponseDTO;
 import org.example.tiendaspringboot.model.Pedido;
 import org.example.tiendaspringboot.repository.PedidoRepository;
+import org.example.tiendaspringboot.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,42 +19,47 @@ import java.util.Optional;
 @RequestMapping("/pedidos")
 public class PedidoController {
     @Autowired
-    private PedidoRepository pedidoRepository;
+    private PedidoService pedidoService;
 
     @GetMapping
-    public List<Pedido> listar() {
-        return pedidoRepository.findAll();
+    public ResponseEntity<List<PedidoResponseDTO>> listar() {
+        return ResponseEntity.ok(pedidoService.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> buscarPorId(@PathVariable int id) {
-        Optional<Pedido> pedido = pedidoRepository.findById(id);
-        return pedido.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable int id) {
+        return ResponseEntity.ok(pedidoService.buscarPorId(id));
+    }
+
+    @GetMapping("/cliente/{idCliente}")
+    public ResponseEntity<List<PedidoResponseDTO>> buscarPorCliente(@PathVariable Integer idCliente){
+        return ResponseEntity.ok(pedidoService.buscarPorCliente(idCliente));
+    }
+
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<PedidoResponseDTO>> buscarPorEstado(@PathVariable String estado){
+        return ResponseEntity.ok(pedidoService.buscarPorEstado(estado));
     }
 
     @PostMapping
-    public Pedido insertar(@RequestBody Pedido pedido) {
-        return pedidoRepository.save(pedido);
+    public ResponseEntity<PedidoResponseDTO> insertar(@RequestBody @Valid PedidoCreateRequestDTO pedido) {
+        PedidoResponseDTO creado = pedidoService.crear(pedido);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> actualizar(@PathVariable int id, @RequestBody Pedido datosNuevos) {
-        return pedidoRepository.findById(id).map(pedidoExistente -> {
-            pedidoExistente.setCliente(datosNuevos.getCliente());
-            pedidoExistente.setEmpleado(datosNuevos.getEmpleado());
-            pedidoExistente.setFechaPedido(datosNuevos.getFechaPedido());
-            pedidoExistente.setEstado(datosNuevos.getEstado());
-            Pedido actualizado = pedidoRepository.save(pedidoExistente);
-            return ResponseEntity.ok(actualizado);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<PedidoResponseDTO> actualizar(@PathVariable int id, @RequestBody @Valid PedidoUpdateRequestDTO
+                                                        datosNuevos) {
+        return ResponseEntity.ok(pedidoService.actualizar(id,datosNuevos));
     }
 
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<PedidoResponseDTO> actualizarEstado(@PathVariable Integer id, @RequestParam String estado){
+        return ResponseEntity.ok(pedidoService.actualizarEstado(id,estado));
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> borrar(@PathVariable int id) {
-        if (!pedidoRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        pedidoRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+      pedidoService.eliminar(id);
+      return ResponseEntity.noContent().build();
     }
 }
