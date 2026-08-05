@@ -1,0 +1,22 @@
+info:
+  name: Actualizar Estado
+  type: http
+  seq: 3
+
+http:
+  method: PATCH
+  url: http://192.168.196.99:8080/pedidos/38/estado?estado=cancelado
+  params:
+    - name: estado
+      value: cancelado
+      type: query
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -10,10 +10,19 @@ http:
     type: json
     data: |-
       {
-        "cliente": { "idCliente": 1 },
-        "empleado": { "idEmpleado": 2 },
-        "fechaPedido": "2024-01-20",
-        "estado": "pendiente"
+        "idCliente": 1,
+        "idEmpleado": 1,
+        "estado": "pendiente",
+        "detalles": [
+          {
+            "idProducto": 1,
+            "cantidad": 2
+          },
+          {
+            "idProducto": 2,
+            "cantidad": 1
+          }
+        ]
       }
   auth: inherit
 

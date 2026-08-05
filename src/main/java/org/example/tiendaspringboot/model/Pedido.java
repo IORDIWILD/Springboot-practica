@@ -30,7 +30,7 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private EstadoPedido estado;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePedido> detalles;
 
 

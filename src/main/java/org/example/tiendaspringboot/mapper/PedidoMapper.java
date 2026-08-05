@@ -5,6 +5,7 @@ import org.example.tiendaspringboot.dto.request.PedidoUpdateRequestDTO;
 import org.example.tiendaspringboot.dto.response.*;
 import org.example.tiendaspringboot.model.DetallePedido;
 import org.example.tiendaspringboot.model.Pedido;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ public class PedidoMapper {
     public Pedido toEntity(PedidoCreateRequestDTO dto){
         if(dto==null) return null;
        Pedido pedido = new Pedido();
-       pedido.setFechaPedido(dto.getFechaPedido() != null ? dto.getFechaPedido(): LocalDate.now());
+       pedido.setFechaPedido(dto.getFechaPedido() != null ? dto.getFechaPedido() : LocalDate.now());
        if(dto.getEstado() != null && !dto.getEstado().isEmpty()){
            pedido.setEstado(Pedido.EstadoPedido.valueOf(dto.getEstado()));
        }else{

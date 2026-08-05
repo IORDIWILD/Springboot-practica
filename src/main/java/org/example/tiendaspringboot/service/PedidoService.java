@@ -56,7 +56,7 @@ public class PedidoService {
                     () -> new RuntimeException("Empleado no encontrado con ID: "+ dto.getIdEmpleado())
             );
         }
-        Pedido pedido = new Pedido();
+        Pedido pedido = pedidoMapper.toEntity(dto);
         pedido.setCliente(cliente);
         pedido.setEmpleado(empleado);
 

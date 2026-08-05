@@ -1,7 +1,7 @@
 info:
   name: Productos
   type: folder
-  seq: 6
+  seq: 5
 
 request:
   auth: inherit
