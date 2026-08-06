@@ -3,6 +3,7 @@ package org.example.tiendaspringboot.service;
 import jakarta.transaction.Transactional;
 import org.example.tiendaspringboot.dto.request.EmpleadoRequestDTO;
 import org.example.tiendaspringboot.dto.response.EmpleadoResponseDTO;
+import org.example.tiendaspringboot.exception.ResourceNotFoundException;
 import org.example.tiendaspringboot.mapper.EmpleadoMapper;
 import org.example.tiendaspringboot.model.Empleado;
 import org.example.tiendaspringboot.repository.EmpleadoRepository;
@@ -27,7 +28,7 @@ public class EmpleadoService {
     public EmpleadoResponseDTO crear(EmpleadoRequestDTO dto) {
         Empleado jefe = null;
         if (dto.getJefeId() != null) {
-            jefe = empleadoRepository.findById((dto.getJefeId())).orElseThrow(() -> new RuntimeException("jefe no encontrado con ID:" +
+            jefe = empleadoRepository.findById((dto.getJefeId())).orElseThrow(() -> new ResourceNotFoundException("jefe no encontrado con ID:" +
                     dto.getJefeId()));
         }
         //mapear ->
@@ -52,14 +53,14 @@ public class EmpleadoService {
 
     public EmpleadoResponseDTO buscarPorId(Integer id) {
         Empleado empleado = empleadoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Empleado no encontrado con id" + id)
+                () -> new ResourceNotFoundException("Empleado", id)
         );
         return empleadoMapper.toResponseDTO(empleado);
     }
 
     public EmpleadoResponseDTO actualizar(Integer id, EmpleadoRequestDTO dto) {
         Empleado existente = empleadoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Empleado no encontrado con id" + id)
+                () -> new ResourceNotFoundException("Empleado", id)
         );
 
         existente.setNombre(dto.getNombre());
@@ -68,7 +69,7 @@ public class EmpleadoService {
 
         if (dto.getJefeId() != null) {
             Empleado nuevoJefe = empleadoRepository.findById(dto.getJefeId()).orElseThrow(
-                    () -> new RuntimeException("Jefe no encontrado con ID: " + dto.getJefeId())
+                    () -> new ResourceNotFoundException("Jefe no encontrado con ID: " + dto.getJefeId())
             );
             existente.setJefe(nuevoJefe);
         } else {
@@ -83,7 +84,7 @@ public class EmpleadoService {
 
     public void eliminar(Integer id){
        if(!empleadoRepository.existsById(id)){
-           throw new RuntimeException("Empleado no encontrado con ID:" + id);
+           throw new ResourceNotFoundException("Empleado", id);
        }else{
             empleadoRepository.deleteById(id);
        }

@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import org.example.tiendaspringboot.dto.request.ResenaCreateRequestDTO;
 import org.example.tiendaspringboot.dto.request.ResenaUpdateRequestDTO;
 import org.example.tiendaspringboot.dto.response.ResenaResponseDTO;
+import org.example.tiendaspringboot.exception.BusinessException;
+import org.example.tiendaspringboot.exception.ResourceNotFoundException;
 import org.example.tiendaspringboot.mapper.ResenaMapper;
 import org.example.tiendaspringboot.model.Cliente;
 import org.example.tiendaspringboot.model.Producto;
@@ -39,13 +41,14 @@ public class ResenaService {
 
     public ResenaResponseDTO buscarPorId(Integer id) {
         Resena resena = resenaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reseña no encontrada con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria", id)
+                );
         return resenaMapper.toResponseDTO(resena);
     }
 
     public List<ResenaResponseDTO> buscarPorProducto(Integer idProducto){
         Producto producto = productoRepository.findById(idProducto).orElseThrow(
-                () -> new RuntimeException("Producto no encontrado con ID: " + idProducto)
+                () -> new ResourceNotFoundException("Producto", idProducto)
         );
 
         return resenaRepository.findByProducto(producto).stream().map(resenaMapper::toResponseDTO).toList();
@@ -53,7 +56,7 @@ public class ResenaService {
 
     public List<ResenaResponseDTO> buscarPorCliente(Integer idCliente){
         Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(
-                () -> new RuntimeException("Cliente no encontrado con ID: " + idCliente)
+                () -> new ResourceNotFoundException("Cliente", idCliente)
         );
 
         return resenaRepository.findByCliente(cliente).stream().map(resenaMapper::toResponseDTO).toList();
@@ -61,13 +64,13 @@ public class ResenaService {
 
     public ResenaResponseDTO crear(ResenaCreateRequestDTO dto) {
         Producto producto = productoRepository.findById(dto.getIdProducto())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + dto.getIdProducto()));
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", dto.getIdProducto()));
 
         Cliente cliente = clienteRepository.findById(dto.getIdCliente())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + dto.getIdCliente()));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", dto.getIdCliente()));
 
         if (resenaRepository.existsByProductoAndCliente(producto, cliente)) {
-            throw new RuntimeException("El cliente ya ha reseñado este producto");
+            throw new BusinessException("El cliente ya ha reseñado este producto");
         }
 
         Resena resena = resenaMapper.toEntity(dto);
@@ -81,7 +84,7 @@ public class ResenaService {
 
     public ResenaResponseDTO actualizar(Integer id, ResenaUpdateRequestDTO dto) {
         Resena existente = resenaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reseña no encontrada con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resena", id));
 
         resenaMapper.actualizarParcial(dto, existente);
 
@@ -92,7 +95,7 @@ public class ResenaService {
 
     public void eliminar(Integer id) {
         Resena resena = resenaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reseña no encontrada con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resena", id));
         resenaRepository.delete(resena);
     }
 

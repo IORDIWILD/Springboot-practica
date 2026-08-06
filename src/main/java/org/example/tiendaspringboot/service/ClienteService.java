@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.example.tiendaspringboot.dto.request.ClienteCreateRequestDTO;
 import org.example.tiendaspringboot.dto.request.ClienteUpdateRequestDTO;
 import org.example.tiendaspringboot.dto.response.ClienteResponseDTO;
+import org.example.tiendaspringboot.exception.ResourceNotFoundException;
 import org.example.tiendaspringboot.mapper.ClienteMapper;
 import org.example.tiendaspringboot.model.Cliente;
 import org.example.tiendaspringboot.repository.ClienteRepository;
@@ -31,7 +32,7 @@ public class ClienteService {
 
     public ClienteResponseDTO buscarPorId(Integer id){
         ClienteResponseDTO cliente = clienteRepository.findById(id).map(clienteMapper::toResponseDTO).orElseThrow(
-                () -> new RuntimeException("Cliente no encontrado con ID: "+ id)
+                () -> new ResourceNotFoundException("Cliente", id)
         );
         return cliente;
     }
@@ -44,7 +45,7 @@ public class ClienteService {
 
     public ClienteResponseDTO actualizar(Integer id, ClienteUpdateRequestDTO dto){
         Cliente existente = clienteRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Cliente no encontrado con ID: " + id)
+                () -> new ResourceNotFoundException("Cliente", id)
         );
         clienteMapper.actualizarParcial(dto,existente);
         Cliente actualizado = clienteRepository.save(existente);
@@ -55,7 +56,7 @@ public class ClienteService {
         if(clienteRepository.existsById(id)){
             clienteRepository.deleteById(id);
         }else{
-            throw new RuntimeException("Cliente no encontrado con ID: " + id);
+            throw new ResourceNotFoundException("Cliente", id);
         }
     }
 

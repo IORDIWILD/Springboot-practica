@@ -6,6 +6,15 @@ info:
 http:
   method: POST
   url: http://192.168.196.99:8080/resenas
+  body:
+    type: json
+    data: |-
+      {
+        "idProducto": 1,
+        "idCliente": 3,
+        "calificacion": 5,
+        "comentario": "Excelente producto, muy recomendado!"
+      }
   auth: inherit
 
 settings:

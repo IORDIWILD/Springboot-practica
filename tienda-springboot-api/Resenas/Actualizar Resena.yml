@@ -5,7 +5,14 @@ info:
 
 http:
   method: PATCH
-  url: http://192.168.196.99:8080/resenas
+  url: http://192.168.196.99:8080/resenas/1
+  body:
+    type: json
+    data: |-
+      {
+        "calificacion": 4,
+        "comentario": "Sigue siendo bueno, pero le bajé una estrella"
+      }
   auth: inherit
 
 settings:

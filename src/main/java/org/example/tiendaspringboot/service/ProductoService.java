@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.example.tiendaspringboot.dto.request.ProductoCreateRequestDTO;
 import org.example.tiendaspringboot.dto.request.ProductoUpdateRequestDTO;
 import org.example.tiendaspringboot.dto.response.ProductoResponseDTO;
+import org.example.tiendaspringboot.exception.ResourceNotFoundException;
 import org.example.tiendaspringboot.mapper.ProductoMapper;
 import org.example.tiendaspringboot.model.Categoria;
 import org.example.tiendaspringboot.model.Producto;
@@ -31,7 +32,7 @@ public class ProductoService {
 
     public ProductoResponseDTO buscarPorId(Integer id){
         Producto producto = productoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Producto inexistente con ID: "+ id)
+                () -> new ResourceNotFoundException("Producto", id)
         );
         return productoMapper.toResponseDTO(producto);
     }
@@ -39,7 +40,7 @@ public class ProductoService {
     public ProductoResponseDTO crear(ProductoCreateRequestDTO dto){
         Producto producto = productoMapper.toEntity(dto);
         Categoria categoria = categoriaRepository.findById(dto.getIdCategoria()).orElseThrow(
-                () -> new RuntimeException("Categoria inexistente con ID: "+ dto.getIdCategoria())
+                () -> new ResourceNotFoundException("Categoria", dto.getIdCategoria())
         );
         producto.setCategoria(categoria);
         Producto guardado = productoRepository.save(producto);
@@ -48,12 +49,12 @@ public class ProductoService {
 
     public ProductoResponseDTO actualizar(Integer id, ProductoUpdateRequestDTO dto){
         Producto existente = productoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Producto inexistente con ID: "+ id)
+                () -> new ResourceNotFoundException("Producto", id)
         );
         productoMapper.actualizarParcial(dto,existente);
         if(dto.getIdCategoria()!=null){
             Categoria categoria = categoriaRepository.findById(dto.getIdCategoria()).orElseThrow(
-                    () -> new RuntimeException("Categoria inexistente con ID: " + dto.getIdCategoria() )
+                    () -> new ResourceNotFoundException("Categoria", dto.getIdCategoria())
             );
             existente.setCategoria(categoria);
         }
@@ -65,13 +66,13 @@ public class ProductoService {
         if(productoRepository.existsById(id)){
             productoRepository.deleteById(id);
         }else{
-            throw new RuntimeException("Producto inexistente con ID: " + id);
+            throw new ResourceNotFoundException("Producto", id);
         }
     }
 
     public List<ProductoResponseDTO> buscarPorCategoria(Integer idCategoria){
         if(!categoriaRepository.existsById(idCategoria)) {
-           throw new RuntimeException("Categoria inexistente con ID: " + idCategoria);
+           throw new ResourceNotFoundException("Categoria", idCategoria);
         }
         return productoRepository.findByCategoriaIdCategoria(idCategoria).stream().map(productoMapper::toResponseDTO).toList();
     }

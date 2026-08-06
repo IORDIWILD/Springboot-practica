@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://192.168.196.99:8080/resenas
+  url: http://192.168.196.99:8080/resenas/13
   auth: inherit
 
 settings:

@@ -5,6 +5,8 @@ import org.example.tiendaspringboot.dto.request.CategoriaCreateRequestDTO;
 import org.example.tiendaspringboot.dto.request.CategoriaUpdateRequestDTO;
 import org.example.tiendaspringboot.dto.response.CategoriaPadreResumenDTO;
 import org.example.tiendaspringboot.dto.response.CategoriaResponseDTO;
+import org.example.tiendaspringboot.exception.BusinessException;
+import org.example.tiendaspringboot.exception.ResourceNotFoundException;
 import org.example.tiendaspringboot.mapper.CategoriaMapper;
 import org.example.tiendaspringboot.model.Categoria;
 import org.example.tiendaspringboot.repository.CategoriaRepository;
@@ -27,7 +29,7 @@ public class CategoriaService {
 
     public CategoriaResponseDTO buscarPorId(Integer id){
         Categoria categoria = categoriaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Categoria no encontrada con ID: "+ id)
+                () -> new ResourceNotFoundException("Categoria",id)
         );
 
         return categoriaMapper.toResponseDTO(categoria);
@@ -37,7 +39,7 @@ public class CategoriaService {
         Categoria padre = null;
         if(dto.getCategoriaPadreId() != null){
             padre = categoriaRepository.findById(dto.getCategoriaPadreId()).orElseThrow(
-                    () -> new RuntimeException("No existe categoria padre con ID :" + dto.getCategoriaPadreId())
+                    () -> new ResourceNotFoundException("No existe categoria padre con id"+ dto.getCategoriaPadreId())
             );
         }
         Categoria categoria = categoriaMapper.toEntity(dto);
@@ -47,14 +49,14 @@ public class CategoriaService {
     }
     public CategoriaResponseDTO actualizar(Integer id, CategoriaUpdateRequestDTO dto){
         Categoria existente = categoriaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Categoria no existente con ID: " + id)
+                () -> new ResourceNotFoundException("Categoria",id)
         );
         categoriaMapper.actualizarParcial(dto,existente);
         if(dto.getCategoriaPadreId()==null){
             return categoriaMapper.toResponseDTO(existente);
         }
         Categoria padre = categoriaRepository.findById(dto.getCategoriaPadreId()).orElseThrow(
-                () -> new RuntimeException("Categoria padre inexistente con ID:" +dto.getCategoriaPadreId())
+                () -> new ResourceNotFoundException("Categoria padre inexistente con ID:" +dto.getCategoriaPadreId())
         );
         existente.setCategoriaPadre(padre);
         Categoria actualizada = categoriaRepository.save(existente);
@@ -62,11 +64,11 @@ public class CategoriaService {
     }
     public void eliminar(Integer id){
         Categoria categoria = categoriaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Categoria inexistente con ID : "+ id)
+                () -> new ResourceNotFoundException("Categoria",id)
         );
         List<Categoria> subCategorias = categoria.getSubCategorias();
         if(!subCategorias.isEmpty()){
-            throw new RuntimeException("No se puede eliminar la categoria por que tiene "+
+            throw new BusinessException("No se puede eliminar la categoria por que tiene "+
                     subCategorias.size() + " subcategorias asociadas");
         }
         categoriaRepository.delete(categoria);

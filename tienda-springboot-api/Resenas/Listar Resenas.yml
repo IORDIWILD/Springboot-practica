@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://192.168.196.99:8080/resenas
+  url: http://192.168.196.99:8080/resenas/cliente/4
   auth: inherit
 
 settings:
