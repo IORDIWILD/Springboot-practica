@@ -63,15 +63,14 @@ public class CategoriaService {
         return categoriaMapper.toResponseDTO(actualizada);
     }
     public void eliminar(Integer id){
-        Categoria categoria = categoriaRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Categoria",id)
-        );
-        List<Categoria> subCategorias = categoria.getSubCategorias();
-        if(!subCategorias.isEmpty()){
-            throw new BusinessException("No se puede eliminar la categoria por que tiene "+
-                    subCategorias.size() + " subcategorias asociadas");
+        if(!categoriaRepository.existsById(id)){
+            throw new ResourceNotFoundException("Categoria", id);
         }
-        categoriaRepository.delete(categoria);
+        int countHijas = categoriaRepository.countSubcategorias(id);
+        if(countHijas > 0 ){
+            throw new BusinessException("La categoria con ID : " + id + " tiene " + countHijas + " Categorias hijas");
+        }
+        categoriaRepository.deleteById(id);
     }
 
 
