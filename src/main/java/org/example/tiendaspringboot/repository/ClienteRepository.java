@@ -22,6 +22,7 @@ public class ClienteRepository {
 
     private RowMapper<Cliente> clienteRowMapper = (rs, rowNum) -> {
         Cliente cliente = new Cliente();
+        cliente.setIdCliente(rs.getInt("id_cliente"));
         cliente.setNombre(rs.getString("nombre"));
         cliente.setEmail(rs.getString("email"));
         cliente.setCiudad(rs.getString("ciudad"));
@@ -32,7 +33,7 @@ public class ClienteRepository {
 
     public List<Cliente> findAll(){
         String query = """
-                SELECT nombre, email, ciudad, fecha_registro, telefono
+                SELECT id_cliente, nombre, email, ciudad, fecha_registro, telefono
                 FROM cliente
                 """;
         return jdbcTemplate.query(query,clienteRowMapper);
@@ -40,7 +41,7 @@ public class ClienteRepository {
 
     public Optional<Cliente> findById(Integer id){
         String query = """
-                SELECT nombre, email, ciudad, fecha_registro, telefono
+                SELECT id_cliente, nombre, email, ciudad, fecha_registro, telefono
                 FROM cliente
                 WHERE id_cliente = ?
                 """;

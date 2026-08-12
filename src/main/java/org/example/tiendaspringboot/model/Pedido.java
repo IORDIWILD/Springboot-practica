@@ -42,22 +42,6 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Integer idPedido, Cliente cliente, Empleado empleado, LocalDate fechaPedido, EstadoPedido estado, List<DetallePedido> detalles) {
-        this.idPedido = idPedido;
-        this.cliente = cliente;
-        this.empleado = empleado;
-        this.fechaPedido = fechaPedido;
-        this.estado = estado;
-        this.detalles = detalles;
-    }
-
-    public Pedido(Cliente cliente, Empleado empleado, LocalDate fechaPedido, EstadoPedido estado, List<DetallePedido> detalles) {
-        this.cliente = cliente;
-        this.empleado = empleado;
-        this.fechaPedido = fechaPedido;
-        this.estado = estado;
-        this.detalles = detalles;
-    }
 
     public Integer getIdPedido() {
         return idPedido;

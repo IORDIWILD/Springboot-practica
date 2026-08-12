@@ -56,10 +56,6 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/categoria/{idCategoria}")
-    public ResponseEntity<List<ProductoResponseDTO>> listarPorCategoria(@PathVariable Integer idCategoria){
-        return ResponseEntity.ok(productoService.buscarPorCategoria(idCategoria));
-    }
 
 }
 

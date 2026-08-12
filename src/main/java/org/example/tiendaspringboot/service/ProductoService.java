@@ -70,12 +70,5 @@ public class ProductoService {
         }
     }
 
-    public List<ProductoResponseDTO> buscarPorCategoria(Integer idCategoria){
-        if(!categoriaRepository.existsById(idCategoria)) {
-           throw new ResourceNotFoundException("Categoria", idCategoria);
-        }
-        return productoRepository.findByCategoriaIdCategoria(idCategoria).stream().map(productoMapper::toResponseDTO).toList();
-    }
-
 
 }

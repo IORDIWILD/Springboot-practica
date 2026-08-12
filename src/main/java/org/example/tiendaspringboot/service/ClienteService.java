@@ -31,10 +31,11 @@ public class ClienteService {
     }
 
     public ClienteResponseDTO buscarPorId(Integer id){
-        ClienteResponseDTO cliente = clienteRepository.findById(id).map(clienteMapper::toResponseDTO).orElseThrow(
+
+        return clienteRepository.findById(id).map(clienteMapper::toResponseDTO).orElseThrow(
                 () -> new ResourceNotFoundException("Cliente", id)
         );
-        return cliente;
+
     }
 
     public ClienteResponseDTO crear(ClienteCreateRequestDTO dto){
@@ -48,8 +49,8 @@ public class ClienteService {
                 () -> new ResourceNotFoundException("Cliente", id)
         );
         clienteMapper.actualizarParcial(dto,existente);
-        Cliente actualizado = clienteRepository.save(existente);
-        return clienteMapper.toResponseDTO(actualizado);
+        clienteRepository.update(existente);
+        return clienteMapper.toResponseDTO(existente);
     }
 
     public void eliminar(Integer id){
