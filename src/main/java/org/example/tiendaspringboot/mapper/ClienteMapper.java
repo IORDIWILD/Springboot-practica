@@ -47,16 +47,16 @@ public class ClienteMapper {
         if(dto == null || cliente == null){
             return;
         }
-        if(dto.getNombre()!= null){
+        if(dto.getNombre()!= null && !dto.getNombre().isBlank()){
             cliente.setNombre(dto.getNombre());
         }
-        if(dto.getEmail()!= null){
+        if(dto.getEmail()!= null && !dto.getEmail().isBlank()){
             cliente.setEmail(dto.getEmail());
         }
-        if(dto.getCiudad()!=null){
+        if(dto.getCiudad()!=null && !dto.getCiudad().isBlank()){
             cliente.setCiudad(dto.getCiudad());
         }
-        if(dto.getTelefono()!= null){
+        if(dto.getTelefono()!= null && !dto.getTelefono().isBlank()){
             cliente.setTelefono(dto.getTelefono());
         }
         if(dto.getFechaRegistro()!=null){

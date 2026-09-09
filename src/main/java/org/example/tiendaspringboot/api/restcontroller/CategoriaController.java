@@ -1,4 +1,4 @@
-package org.example.tiendaspringboot.controller;
+package org.example.tiendaspringboot.api.restcontroller;
 
 
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/api/categorias")
 public class CategoriaController {
 
     @Autowired

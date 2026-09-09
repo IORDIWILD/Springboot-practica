@@ -94,7 +94,7 @@ public class EmpleadoRepository {
                     WHERE id_empleado = ?
                     """;
             jdbcTemplate.update(query,empleado.getNombre(), empleado.getPuesto(), empleado.getFechaContratacion(),
-                    empleado.getSalario(), empleado.getJefe() != null ? empleado.getJefe().getIdEmpleado():null);
+                    empleado.getSalario(), empleado.getJefe() != null ? empleado.getJefe().getIdEmpleado():null,empleado.getIdEmpleado());
 
             return empleado;
 
@@ -114,7 +114,7 @@ public class EmpleadoRepository {
         String query = """
                 SELECT EXISTS(
                     SELECT 1 FROM empleado
-                    WHERE id_cliente = ?
+                    WHERE id_empleado = ?
                 ) as existe
                 """;
         return jdbcTemplate.queryForObject(query, Boolean.class,id);

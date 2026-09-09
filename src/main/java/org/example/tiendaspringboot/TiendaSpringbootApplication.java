@@ -9,7 +9,5 @@ public class TiendaSpringbootApplication {
     public static void main(String[] args) {
         SpringApplication.run(TiendaSpringbootApplication.class, args);
     }
-
-
-
+    
 }

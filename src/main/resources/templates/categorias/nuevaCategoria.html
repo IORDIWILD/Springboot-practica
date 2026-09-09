@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificacion</title>
+</head>
+<body>
+    <h1>Agregar nueva categoria</h1>
+    <a href="http://localhost:8080/categorias">Volver a la lista</a>
+    <hr>
+    <form action="#" th:action="@{nuevo/guardar}" th:object="${categoriaRequest}" method="post">
+        <div>
+            <label for="nombre">Nombre de la categoria</label>
+            <input type ="text" id="nombre" th:field="*{nombre}" required>
+        </div>
+        <br>
+        <div>
+            <label for="categoriaPadreId">Categoría Padre (Opcional):</label>
+            <select id="categoriaPadreId" th:field="*{categoriaPadreId}">
+                <option value="">--Ninguna (Categoria Raiz) </option>
+                <option th:each="categoria : ${listaCategorias}" th:value="${categoria.idCategoria}"
+                        th:text="${categoria.nombre}"> </option>
+            </select>
+        </div>
+        <br>
+        <button type="submit">Guardar Categoría</button>
+    </form>
+
+</body>
+</html>

@@ -2,14 +2,13 @@ package org.example.tiendaspringboot.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class EmpleadoRequestDTO {
+public class EmpleadoUpdateRequestDTO {
 
-    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
-
 
     private String puesto;
 
@@ -21,7 +20,7 @@ public class EmpleadoRequestDTO {
     private LocalDate fechaContratacion;
 
 
-    public EmpleadoRequestDTO() {
+    public EmpleadoUpdateRequestDTO() {
     }
 
     public String getNombre() {

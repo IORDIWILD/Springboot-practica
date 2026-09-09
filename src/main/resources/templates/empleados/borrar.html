@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrar Empleado</title>
+</head>
+<body>
+
+<h1>Borrar Empleado</h1>
+<a href="http://localhost:8080/empleados">Volver al Menu de Empleados</a>
+<hr>
+
+<form action="#" th:action="@{borrar/guardar}" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+
+    <div>
+        <label for="id">ID</label>
+        <input type="number" id="id" name="id" required>
+    </div>
+
+    <button type="submit">Borrar Empleado</button>
+</form>
+
+
+
+</body>
+</html>

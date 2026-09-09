@@ -1,6 +1,7 @@
 package org.example.tiendaspringboot.mapper;
 
 import org.example.tiendaspringboot.dto.request.EmpleadoRequestDTO;
+import org.example.tiendaspringboot.dto.request.EmpleadoUpdateRequestDTO;
 import org.example.tiendaspringboot.dto.response.EmpleadoResponseDTO;
 import org.example.tiendaspringboot.dto.response.JefeResumenDTO;
 import org.example.tiendaspringboot.model.Empleado;
@@ -40,7 +41,7 @@ public class EmpleadoMapper {
             jefeDTO.setPuesto(empleado.getJefe().getPuesto());
             dto.setJefe(jefeDTO);
         }
-
         return dto;
     }
+
 }

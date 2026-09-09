@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Empleados</title>
+</head>
+<body>
+
+<h1>Empleados</h1>
+<a href="http://localhost:8080/">Volver al Menú</a>
+
+
+<form action="#" th:action="@{/empleados/buscar}" method="get" >
+    <label for="id">Buscar por ID:</label>
+    <input type="number" id="id" name="id" required>
+    <button type="submit">Buscar</button>
+</form>
+
+<a href="/empleados/listar">Ver todos los Empleados</a>
+<a href="/empleados/crear">Nueva Empleado</a>
+<a href="/empleados/actualizar">Actualizar Empleado</a>
+<a href="/empleados/borrar">Borrar Empleado</a>
+
+
+<table border="1" th:if="${empleados!=null and !empleados.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Puesto</th>
+        <th>Salario</th>
+        <th>Jefe ID</th>
+        <th>Fecha de Contratacion</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="empleado : ${empleados}">
+        <td th:text="${empleado.idEmpleado}"></td>
+        <td th:text="${empleado.nombre}"></td>
+        <td th:text="${empleado.puesto}"></td>
+        <td th:text="${empleado.salario}"></td>
+        <td th:text="${empleado.jefe?.idEmpleado}"></td>
+        <td th:text="${empleado.fechaContratacion}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

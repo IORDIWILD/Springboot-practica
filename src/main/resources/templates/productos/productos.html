@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Productos</title>
+</head>
+<body>
+
+<h1>Productos</h1>
+<a href="http://localhost:8080/">Volver al Menú</a>
+
+<form action="#" th:action="@{/productos/buscar}" method="get">
+    <label for="id">Buscar por ID:</label>
+    <input type="number" id="id" name="id" required>
+    <button type="submit">Buscar</button>
+</form>
+
+<a href="/productos/listar">Ver todos los Productos</a>
+<a href="/productos/crear">Nuevo Producto</a>
+<a href="/productos/actualizar">Actualizar Producto</a>
+<a href="/productos/borrar">Borrar Producto</a>
+
+<table border="1" th:if="${productos != null and !productos.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="producto : ${productos}">
+        <td th:text="${producto.idProducto}"></td>
+        <td th:text="${producto.nombre}"></td>
+        <td th:text="${producto.categoria != null ? producto.categoria.nombre : 'Sin categoría'}"></td>
+        <td th:text="${producto.precio}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package org.example.tiendaspringboot.controller;
+package org.example.tiendaspringboot.api.restcontroller;
 
 import jakarta.validation.Valid;
 import org.example.tiendaspringboot.dto.request.ResenaCreateRequestDTO;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/resenas")
+@RequestMapping("/api/resenas")
 public class ResenaController {
 
     @Autowired

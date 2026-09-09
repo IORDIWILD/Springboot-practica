@@ -1,4 +1,4 @@
-package org.example.tiendaspringboot.controller;
+package org.example.tiendaspringboot.api.restcontroller;
 
 
 import jakarta.validation.Valid;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 public class ProductoController {
     @Autowired
     private ProductoService productoService;

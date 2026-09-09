@@ -1,4 +1,4 @@
-package org.example.tiendaspringboot.controller;
+package org.example.tiendaspringboot.api.restcontroller;
 
 import jakarta.validation.Valid;
 import org.example.tiendaspringboot.dto.request.PedidoCreateRequestDTO;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("/api/pedidos")
 public class PedidoController {
     @Autowired
     private PedidoService pedidoService;

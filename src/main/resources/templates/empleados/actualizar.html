@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Empleado</title>
+</head>
+<body>
+
+<h1>Actualizar Empleado</h1>
+<a href="http://localhost:8080/empleados">Volver al Menu de Empleados</a>
+<hr>
+
+<form th:action="@{actualizar/guardar}" th:object="${empleado}" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <label for="id">ID</label>
+    <input type="number" id="id" name="id">.
+    <br>
+    <label for="nombre">Nombre</label>
+    <input type ="text" id="nombre" th:field="*{nombre}" required>
+    <br>
+    <label for="puesto">Puesto</label>
+    <input type ="text" id="puesto" th:field="*{puesto}" required>
+    <br>
+    <label for="salario">Salario</label>
+    <input type ="text" id="salario" th:field="*{salario}" required>
+    <br>
+    <label for="jefe">id del Jefe</label>
+    <input type ="text" id="jefe" th:field="*{jefeId}" required>
+    <br>
+    <label for="fecha">Fecha de Contratacion</label>
+    <input type ="text" id="fecha" th:field="*{fechaContratacion}" required>
+    <br>
+    <button type="submit">Actualizar Empleado</button>
+</form>
+
+
+
+</body>
+</html>

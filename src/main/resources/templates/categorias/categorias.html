@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base href="http://localhost:8080/categorias/">
+    <title>Lista de Categorías</title>
+</head>
+<body>
+<h1>Categoría</h1>
+<a href="http://localhost:8080/">Volver al Menú</a>
+<hr>
+
+
+<form action="buscar" method="get">
+    <label for="id">Buscar por ID:</label>
+    <input type="number" id="id" name="id" required>
+    <button type="submit">Buscar</button>
+    <a href="listar">Ver todas</a>
+</form>
+
+
+<a href="nuevo">Nueva Categoria</a>
+<a href="actualizar">Actualizar Categoria</a>
+<a href="borrar">Borrar Categoria</a>
+
+<p style="color: red;" th:if="${error != null}" th:text="${error}"></p>
+
+<table border="1" th:if="${categorias != null and !categorias.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Padre ID</th>
+        <th>Padre Nombre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="categoria : ${categorias}">
+        <td th:text="${categoria.idCategoria}"></td>
+        <td th:text="${categoria.nombre}"></td>
+        <td th:text="${categoria.categoriaPadre?.idCategoria}"></td>
+        <td th:text="${categoria.categoriaPadre?.nombre}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

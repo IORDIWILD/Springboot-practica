@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Reseña</title>
+</head>
+<body>
+
+<h1>Agregar nueva Reseña</h1>
+<a href="http://localhost:8080/resenas">Volver al Menú de Reseñas</a>
+<hr>
+
+<form th:action="@{crear/guardar}" th:object="${resena}" method="post">
+    <label for="idProducto">ID Producto</label>
+    <input type="number" id="idProducto" th:field="*{idProducto}" required>
+    <br>
+
+    <label for="idCliente">ID Cliente</label>
+    <input type="number" id="idCliente" th:field="*{idCliente}" required>
+    <br>
+
+    <label for="calificacion">Calificación (1-5)</label>
+    <input type="number" id="calificacion" th:field="*{calificacion}" min="1" max="5" required>
+    <br>
+
+    <label for="comentario">Comentario</label>
+    <input type="text" id="comentario" th:field="*{comentario}">
+    <br>
+
+    <label for="fecha">Fecha (yyyy-MM-dd)</label>
+    <input type="text" id="fecha" th:field="*{fecha}" placeholder="2026-08-30" required>
+    <br>
+
+    <button type="submit">Crear Reseña</button>
+</form>
+
+</body>
+</html>

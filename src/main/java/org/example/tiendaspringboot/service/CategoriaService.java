@@ -59,8 +59,8 @@ public class CategoriaService {
                 () -> new ResourceNotFoundException("Categoria padre inexistente con ID:" +dto.getCategoriaPadreId())
         );
         existente.setCategoriaPadre(padre);
-        Categoria actualizada = categoriaRepository.save(existente);
-        return categoriaMapper.toResponseDTO(actualizada);
+        categoriaRepository.update(existente);
+        return categoriaMapper.toResponseDTO(existente);
     }
     public void eliminar(Integer id){
         if(!categoriaRepository.existsById(id)){

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrar Pedido</title>
+</head>
+<body>
+
+<h1>Borrar Pedido</h1>
+<a href="http://localhost:8080/pedidos">Volver al Menú de Pedidos</a>
+<hr>
+
+<form action="#" th:action="@{borrar/guardar}" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+
+    <div>
+        <label for="id">ID del Pedido</label>
+        <input type="number" id="id" name="id" required>
+    </div>
+
+    <button type="submit">Borrar Pedido</button>
+</form>
+
+</body>
+</html>

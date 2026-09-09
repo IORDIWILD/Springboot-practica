@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Reseñas</title>
+</head>
+<body>
+
+<h1>Reseñas</h1>
+<a href="http://localhost:8080/">Volver al Menú</a>
+
+<form action="#" th:action="@{/resenas/buscar}" method="get">
+    <label for="id">Buscar por ID:</label>
+    <input type="number" id="id" name="id" required>
+    <button type="submit">Buscar</button>
+</form>
+
+<a href="/resenas/listar">Ver todas las Reseñas</a>
+<a href="/resenas/crear">Nueva Reseña</a>
+<a href="/resenas/actualizar">Actualizar Reseña</a>
+<a href="/resenas/borrar">Borrar Reseña</a>
+
+<table border="1" th:if="${resenas != null and !resenas.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Cliente</th>
+        <th>Calificación</th>
+        <th>Comentario</th>
+        <th>Fecha</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="resena : ${resenas}">
+        <td th:text="${resena.idResena}"></td>
+        <td th:text="${resena.producto != null ? resena.producto.nombre : 'Sin producto'}"></td>
+        <td th:text="${resena.cliente != null ? resena.cliente.nombre : 'Sin cliente'}"></td>
+        <td th:text="${resena.calificacion}"></td>
+        <td th:text="${resena.comentario}"></td>
+        <td th:text="${resena.fecha}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

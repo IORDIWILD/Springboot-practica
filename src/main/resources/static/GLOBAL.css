@@ -1,0 +1,9 @@
+:root{
+    --btn-border-color-p: #E5EEFF;
+}
+.btn{
+    border: 1px solid var(--btn-border-color-p) !important;
+}
+.text-warning{
+    color: red;
+}

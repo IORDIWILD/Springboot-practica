@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Clientes</title>
+</head>
+<body>
+
+<h1>Clientes</h1>
+<a href="http://localhost:8080/">Volver al Menú</a>
+
+<form action="#" th:action="@{/categorias/buscar}" method="get" >
+    <label for="id">Buscar por ID:</label>
+    <input type="number" id="id" name="id" required>
+    <button type="submit">Buscar</button>
+</form>
+<a href="/clientes/listar">Ver todas</a>
+<a href="/clientes/crear">Nueva Categoria</a>
+<a href="/clientes/actualizar">Actualizar Categoria</a>
+<a href="/clientes/borrar">Borrar Categoria</a>
+
+<table border="1" th:if="${clientes!=null and !clientes.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Ciudad</th>
+        <th>Fecha de Registro</th>
+        <th>Telefono</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cliente : ${clientes}">
+        <td th:text="${cliente.idCliente}"></td>
+        <td th:text="${cliente.nombre}"></td>
+        <td th:text="${cliente.email}"></td>
+        <td th:text="${cliente.ciudad}"></td>
+        <td th:text="${cliente.fechaRegistro}"></td>
+        <td th:text="${cliente.telefono}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

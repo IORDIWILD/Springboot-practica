@@ -8,7 +8,7 @@ public class EmpleadoResponseDTO {
     private String nombre;
     private String puesto;
     private BigDecimal salario;
-    private JefeResumenDTO jefe; //resumen del jefe
+    private JefeResumenDTO jefe;
     private LocalDate fechaContratacion;
 
     public EmpleadoResponseDTO() {
@@ -60,5 +60,9 @@ public class EmpleadoResponseDTO {
 
     public void setFechaContratacion(LocalDate fechaContratacion) {
         this.fechaContratacion = fechaContratacion;
+    }
+
+    public Integer getJefeId() {
+        return jefe != null ? jefe.getIdEmpleado() : null;
     }
 }
