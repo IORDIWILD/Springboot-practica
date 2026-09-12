@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/NEmpleados")
+@RequestMapping("/empleados")
 public class EmpleadosController {
 
     @Autowired
@@ -29,20 +29,20 @@ public class EmpleadosController {
     public String crear(@ModelAttribute EmpleadoRequestDTO empleadoRequestDTO) {
         // Cambiarlo por una petición /api/empleados POST
         empleadoService.crear(empleadoRequestDTO);
-        return "redirect:/NEmpleados";
+        return "redirect:/empleados";
     }
 
     @PostMapping("/Modificar/{id}")
     public String modificar(@PathVariable int id, @ModelAttribute EmpleadoRequestDTO empleadoRequestDTO) {
         // Cambiarlo por una petición /api/empleados/{id} PUT
         empleadoService.actualizar(id, empleadoRequestDTO);
-        return "redirect:/NEmpleados";
+        return "redirect:/empleados";
     }
 
     @GetMapping("/Borrar/{id}")
     public String borrar(@PathVariable int id) {
         // Cambiarlo por una petición /api/empleados/{id} DELETE
         empleadoService.eliminar(id);
-        return "redirect:/NEmpleados";
+        return "redirect:/empleados";
     }
 }
